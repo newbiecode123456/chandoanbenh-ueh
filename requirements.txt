@@ -1,0 +1,8 @@
+opencv-python
+opencv-python-headless
+opencv-contrib-python-headless
+streamlit
+pandas
+keras
+tensorflow==2.15.0
+Keras-Preprocessing
