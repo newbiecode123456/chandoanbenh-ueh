@@ -21,8 +21,8 @@ def main():
     # end title
 
     st.header("NGHIÊN CỨU KHOA HỌC CẤP TRƯỜNG CÔNG NGHỆ VÀ THIẾT KẾ UEH")
-    st.subheader("NGHIÊN CỨU MÔ HÌNH TEACHABLE MACHINE KẾT HỢP GIỮA HỌC MÁY VÀ HỌC SÂU TRONG CHUẨN ĐOÁN BỆNH")
-    st.subheader("CHUẨN ĐOÁN BỆNH DỰA TRÊN MÔ HÌNH TEACHABLE MACHINE")
+    st.subheader("NGHIÊN CỨU MÔ HÌNH TEACHABLE MACHINE KẾT HỢP GIỮA HỌC MÁY VÀ HỌC SÂU TRONG CHẨN ĐOÁN BỆNH")
+    st.subheader("CHẨN ĐOÁN BỆNH DỰA TRÊN MÔ HÌNH TEACHABLE MACHINE")
     # đưa về dạng thập phân
     np.set_printoptions(suppress=True)
     
