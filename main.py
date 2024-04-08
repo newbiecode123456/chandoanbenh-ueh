@@ -59,7 +59,7 @@ def main():
 
     # upload file
     if isLoaded:
-        uploaded_image = st.file_uploader("Chọn file ảnh", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, *, disabled=False, label_visibility="visible")
+        uploaded_image = st.file_uploader("Chọn file ảnh", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None)
         data = np.ndarray(shape=(1, pixels, pixels, 3), dtype=np.float32)
         name_class_detection = open("detectxray/detectxray_labels.txt", "r").readlines()
         # đã uploaded ảnh
