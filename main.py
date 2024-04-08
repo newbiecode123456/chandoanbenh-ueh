@@ -32,7 +32,7 @@ def main():
     choice = st.sidebar.selectbox("Chọn một Model", menu)
     isLoaded = False
     pixels = 0
-    class_name = None
+    class_name_labels = None
     if choice == "Home":
         st.write("Nhấn vào Navigation trước để lựa chọn model!!!!")
     elif choice == "Model CNN Xception":
@@ -42,7 +42,7 @@ def main():
         with st.spinner("Đang thực hiện load Model..."):
             model = load_model("xception/xception.h5", compile=False)
             model_detect = load_model("detectxray/detectxray_model.h5", compile=False)
-            class_name = open("xception/labels.txt", "r").readlines()
+            class_name_labels = open("xception/labels.txt", "r").readlines()
             isLoaded = True
             pixels = 224
     elif choice == "Model TeachableMachine":
@@ -52,7 +52,7 @@ def main():
         with st.spinner("Đang thực hiện load Model..."):
             model = load_model("tmmodel/tmmodel.h5", compile=False)
             model_detect = load_model("detectxray/detectxray_model.h5", compile=False)
-            class_name = open("tmmodel/labels.txt", "r").readlines()
+            class_name_labels = open("tmmodel/labels.txt", "r").readlines()
             isLoaded = True
             pixels = 224
     else: st.write("Chưa chọn model!!!")
@@ -62,6 +62,7 @@ def main():
         uploaded_image = st.file_uploader("Chọn file ảnh", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None)
         data = np.ndarray(shape=(1, pixels, pixels, 3), dtype=np.float32)
         name_class_detection = open("detectxray/detectxray_labels.txt", "r").readlines()
+        class_names = class_name_labels
         # đã uploaded ảnh
         if not (uploaded_image is None):
             # xử lý ảnh
@@ -84,7 +85,7 @@ def main():
             detection_index = np.argmax(detection)
             class_detection = name_class_detection[detection_index]
             ## không phải ảnh xquang
-            if int(class_name[0]) == 0:
+            if int(class_detection[0]) == 0:
                 st.error("Ảnh mờ hoặc không phải ảnh phim X-quang, vui lòng chọn tải lên ảnh khác")
             ## không phải ảnh xquang
             else:
