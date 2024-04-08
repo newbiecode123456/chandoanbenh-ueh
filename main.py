@@ -90,6 +90,7 @@ def main():
                 st.error("F1")
             ## không phải ảnh xquang
             else:
+                st.error(class_detection[0])
                 st.error("F2")
                 # predict image
                 prediction = model.predict(data)
