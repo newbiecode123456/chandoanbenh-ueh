@@ -87,8 +87,10 @@ def main():
             ## không phải ảnh xquang
             if int(class_detection[0]) == 0:
                 st.error("Ảnh mờ hoặc không phải ảnh phim X-quang, vui lòng chọn tải lên ảnh khác")
+                st.error("F1")
             ## không phải ảnh xquang
             else:
+                st.error("F2")
                 # predict image
                 prediction = model.predict(data)
                 index = np.argmax(prediction)
