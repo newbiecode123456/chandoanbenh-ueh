@@ -63,6 +63,11 @@ def main():
         data = np.ndarray(shape=(1, pixels, pixels, 3), dtype=np.float32)
         name_class_detection = open("detectxray/detectxray_labels.txt", "r").readlines()
         class_names = class_name_labels
+        # 
+        checkxray = st.radio(
+        "Kiểm tra ảnh đã uploaded có phải ảnh X-quang hay không?",
+        [":rainbow[Có]", "***Không***"],
+        captions = ["Sử dụng AI để nhận diện", "Nếu không phải ảnh X-quang mô hình sẽ nhận diện sai!"])
         # đã uploaded ảnh
         if not (uploaded_image is None):
             # xử lý ảnh
@@ -80,30 +85,46 @@ def main():
             # image into the array
             data[0] = normalized_image_array
             
-            # phát hiện ảnh có phải ảnh xquang không
-            detection = model.predict(data)
-            detection_index = np.argmax(detection)
-            class_detection = name_class_detection[detection_index]
-            ## không phải ảnh xquang
-            if int(class_detection[0]) == 1 or (class_detection[0] == 0 and detection[0][detection_index] < 0.9):
-                st.error("Ảnh mờ hoặc không phải ảnh phim X-quang, vui lòng chọn tải lên ảnh khác")
-            ## không phải ảnh xquang
-            else:
-                # predict image
-                prediction = model.predict(data)
-                index = np.argmax(prediction)
-                class_name = class_names[index]
-                confidence_score = prediction[0][index]
-                st.info("Các tham số dự đoán: ")
-                st.write("Class:", class_name[2:])
-                st.write("Confidence Score: ", confidence_score)
-                st.info("Kết quả dự đoán: ")
-                if int(class_name[0]) == 1 or (class_name[0] == 0 and confidence_score < 0.8):
-                    percentx = round(confidence_score,2) * 100
-                    st.error("Mô hình dự đoán Phim X quang được tải lên có nguy cơ viêm phổi với độ chính xác " + str(percentx) + "%. Bạn cần thực hiện các phát đồ chuyên môn tại cơ sở y tế gần nhất sớm nhất có thể.")
+            # kiểm tra ảnh X-quang
+            if checkxray == ':rainbow[Có]':
+                # phát hiện ảnh có phải ảnh xquang không
+                detection = model.predict(data)
+                detection_index = np.argmax(detection)
+                class_detection = name_class_detection[detection_index]
+                ## không phải ảnh xquang
+                if int(class_detection[0]) == 1 or (class_detection[0] == 0 and detection[0][detection_index] < 0.9):
+                    st.error("Ảnh mờ hoặc không phải ảnh phim X-quang, vui lòng chọn tải lên ảnh khác")
+                ## không phải ảnh xquang
                 else:
-                    st.success("Mô hình không dự đoán được bất thường nhưng nếu bạn có BẤT CỨ TRIỆU CHỨNG nào của bệnh Viêm phổi hãy đến ngay cơ sở Y tế gần nhất")
-
+                    # predict image
+                    prediction = model.predict(data)
+                    index = np.argmax(prediction)
+                    class_name = class_names[index]
+                    confidence_score = prediction[0][index]
+                    st.info("Các tham số dự đoán: ")
+                    st.write("Class:", class_name[2:])
+                    st.write("Confidence Score: ", confidence_score)
+                    st.info("Kết quả dự đoán: ")
+                    if int(class_name[0]) == 1 or (class_name[0] == 0 and confidence_score < 0.8):
+                        percentx = round(confidence_score,2) * 100
+                        st.error("Mô hình dự đoán Phim X quang được tải lên có nguy cơ viêm phổi với độ chính xác " + str(percentx) + "%. Bạn cần thực hiện các phát đồ chuyên môn tại cơ sở y tế gần nhất sớm nhất có thể.")
+                    else:
+                        st.success("Mô hình không dự đoán được bất thường nhưng nếu bạn có BẤT CỨ TRIỆU CHỨNG nào của bệnh Viêm phổi hãy đến ngay cơ sở Y tế gần nhất")
+            else:
+                    # predict image
+                    prediction = model.predict(data)
+                    index = np.argmax(prediction)
+                    class_name = class_names[index]
+                    confidence_score = prediction[0][index]
+                    st.info("Các tham số dự đoán: ")
+                    st.write("Class:", class_name[2:])
+                    st.write("Confidence Score: ", confidence_score)
+                    st.info("Kết quả dự đoán: ")
+                    if int(class_name[0]) == 1 or (class_name[0] == 0 and confidence_score < 0.8):
+                        percentx = round(confidence_score,2) * 100
+                        st.error("Mô hình dự đoán Phim X quang được tải lên có nguy cơ viêm phổi với độ chính xác " + str(percentx) + "%. Bạn cần thực hiện các phát đồ chuyên môn tại cơ sở y tế gần nhất sớm nhất có thể.")
+                    else:
+                        st.success("Mô hình không dự đoán được bất thường nhưng nếu bạn có BẤT CỨ TRIỆU CHỨNG nào của bệnh Viêm phổi hãy đến ngay cơ sở Y tế gần nhất")
 def footer_h():
     st.warning("Các mô hình được huấn luyện nhằm mục đích Giáo dục với dữ liệu hạn chế (số lượng ít) và chưa được kiểm định bởi chuyên gia y tế về tính chính xác!")
     st.write("Bộ dữ liệu train các mô hình được lấy tại Kaggle [tại đây](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)")
