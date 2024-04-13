@@ -1,0 +1,2 @@
+0 NotXray
+1 ChestXray
