@@ -92,7 +92,7 @@ def main():
                 detection_index = np.argmax(detection)
                 class_detection = name_class_detection[detection_index]
                 ## không phải ảnh xquang
-                if int(class_detection[0]) == 1 or (class_detection[0] == 0 and detection[0][detection_index] < 0.9):
+                if int(class_detection[0]) == 1:
                     st.error("Ảnh mờ hoặc không phải ảnh phim X-quang, vui lòng chọn tải lên ảnh khác")
                 ## không phải ảnh xquang
                 else:
