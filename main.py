@@ -41,7 +41,7 @@ def main():
         st.write("Model CNN")
         with st.spinner("Đang thực hiện load Model..."):
             model = load_model("xception/xception.h5", compile=False)
-            model_detect = load_model("detectxray/detectxray_model.h5", compile=False)
+            model_detect = load_model("detectxray/new_detectxray_model.h5", compile=False)
             class_name_labels = open("xception/labels.txt", "r").readlines()
             isLoaded = True
             pixels = 224
@@ -51,7 +51,7 @@ def main():
         st.write("Trang chủ  [Teachable Machine](https://teachablemachine.withgoogle.com/)")
         with st.spinner("Đang thực hiện load Model..."):
             model = load_model("tmmodel/tmmodel.h5", compile=False)
-            model_detect = load_model("detectxray/detectxray_model.h5", compile=False)
+            model_detect = load_model("detectxray/new_detectxray_model.h5", compile=False)
             class_name_labels = open("tmmodel/labels.txt", "r").readlines()
             isLoaded = True
             pixels = 224
@@ -61,7 +61,7 @@ def main():
     if isLoaded:
         uploaded_image = st.file_uploader("Chọn file ảnh", type=['png', 'jpg'], accept_multiple_files=False, key=None, help=None)
         data = np.ndarray(shape=(1, pixels, pixels, 3), dtype=np.float32)
-        name_class_detection = open("detectxray/detectxray_labels.txt", "r").readlines()
+        name_class_detection = open("detectxray/new_detectxray_labels.txt", "r").readlines()
         class_names = class_name_labels
         # 
         checkxray = st.radio(
